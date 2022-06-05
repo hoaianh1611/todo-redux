@@ -1,6 +1,6 @@
 export const ADD_TODO = "TODO.ADD";
 export const GET_TODOS = "TODO.GET_TODOS";
-export const TOGGLE_TODO = "TODO.TOGGLE_TODOS";
+export const TOGGLE_TODO = "TODO.TOGGLE_TODO";
 export const SET_FILTER = "TODO.SET_FILTER";
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
 };
 
 const todoReducer = (state = initialState, action) => {
+  console.log("dispatch", JSON.stringify(action, null, 2));
   const { type, payload } = action;
 
   switch (type) {
@@ -26,7 +27,7 @@ const todoReducer = (state = initialState, action) => {
         ...state,
         todos: state.todos.map((todo) => {
           if (todo.id !== payload.id) return todo;
-          console.log("to do", todo);
+          console.log("toggle reducer", payload.id, todo.id === payload.id);
           return { ...todo, completed: !todo.completed };
         }),
       };
