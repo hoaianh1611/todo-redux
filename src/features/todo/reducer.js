@@ -27,7 +27,7 @@ const todoReducer = (state = initialState, action) => {
         ...state,
         todos: state.todos.map((todo) => {
           if (todo.id !== payload.id) return todo;
-          console.log("toggle reducer", payload.id, todo.id === payload.id);
+          console.log("toggle reducer", payload);
           return { ...todo, completed: !todo.completed };
         }),
       };

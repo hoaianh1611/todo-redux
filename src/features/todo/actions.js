@@ -2,7 +2,6 @@ import apiService from "../../app/apiService";
 import { ADD_TODO, TOGGLE_TODO, SET_FILTER, GET_TODOS } from "./reducer";
 
 let nextTodoId = 0;
-let todosArray = [];
 
 // export const addTodo = (text) => {
 //   return {
@@ -28,7 +27,6 @@ export const getTodos = () => async (dispatch) => {
   try {
     const res = await apiService.get("/todos");
     nextTodoId = res.data.length + 1;
-    todosArray = res.data;
     dispatch({ type: GET_TODOS, payload: res.data });
   } catch (error) {
     console.log(error);
@@ -42,16 +40,13 @@ export const getTodos = () => async (dispatch) => {
 //   };
 // };
 
-export const toggleTodo = (id) => async (dispatch) => {
+export const toggleTodo = (todo) => async (dispatch) => {
   try {
-    const arrayChange = todosArray[id - 1];
-    console.log(arrayChange);
-    const res = await apiService.put(`/todos/${id}`, {
-      ...arrayChange,
-      completed: !arrayChange.completed,
+    const res = await apiService.put(`/todos/${todo.id}`, {
+      ...todo,
+      completed: !todo.completed,
     });
     dispatch({ type: TOGGLE_TODO, payload: res.data });
-    // console.log("dispatch", res);
   } catch (error) {
     console.log(error);
   }
